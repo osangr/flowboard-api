@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Task, taskStatus } from "./types";
+import { TaskModel, taskStatus } from "./types";
 
 const taskSchema = new mongoose.Schema(
   {
@@ -28,6 +28,6 @@ const taskSchema = new mongoose.Schema(
   }
 );
 
-const Task = mongoose.model<Task>("Task", taskSchema);
+const TaskModel = mongoose.model<TaskModel>("Task", taskSchema);
 
-export default Task;
+export default TaskModel;

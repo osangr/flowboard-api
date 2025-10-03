@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { Project } from "./types";
+import { ProjectModel } from "./types";
 
 const ProjectSchema: Schema = new Schema(
   {
@@ -30,4 +30,4 @@ const ProjectSchema: Schema = new Schema(
   }
 );
 
-export default mongoose.model<Project>("Project", ProjectSchema);
+export default mongoose.model<ProjectModel>("Project", ProjectSchema);

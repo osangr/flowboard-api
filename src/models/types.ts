@@ -1,10 +1,10 @@
 import { Document, Types, PopulatedDoc } from "mongoose";
 
-export interface Project extends Document {
+export interface ProjectModel extends Document {
   projectName: string;
   clientName: string;
   description: string;
-  tasks?: PopulatedDoc<Task & Document>[];
+  tasks?: PopulatedDoc<TaskModel & Document>[];
 }
 
 export const taskStatus = {
@@ -17,7 +17,7 @@ export const taskStatus = {
 
 export type TaskStatusType = (typeof taskStatus)[keyof typeof taskStatus];
 
-export interface Task extends Document {
+export interface TaskModel extends Document {
   title: string;
   description?: string;
   status: TaskStatusType;
