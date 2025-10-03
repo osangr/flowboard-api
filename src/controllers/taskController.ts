@@ -36,4 +36,49 @@ export class TaskController {
       return;
     }
   };
+
+  static getTaskById = async (req: Request, res: Response) => {
+    try {
+      res.status(200).json(req.task);
+    } catch (error) {
+      return res.status(500).send({ error: "Error retrieving task" });
+    }
+  };
+
+  static updateTask = async (req: Request, res: Response) => {
+    try {
+      req.task.title = req.body.title;
+      req.task.description = req.body.description;
+      await req.task.save();
+      res.status(200).json({ msg: "Task updated correctly" });
+    } catch (error) {
+      return res.status(500).send({ error: "Error updating task" });
+    }
+  };
+
+  static removeTask = async (req: Request, res: Response) => {
+    try {
+      req.project.tasks = req.project.tasks.filter(
+        (task) => task.toString() !== req.task.id.toString()
+      );
+
+      await req.task.deleteOne();
+      Promise.allSettled([req.task.deleteOne(), req.project.save()]);
+
+      res.send(`req.Task deleted: ${req.task}`);
+    } catch (error) {
+      return res.status(500).send({ error: "Error deleting task" });
+    }
+  };
+
+  static updateTaskStatus = async (req: Request, res: Response) => {
+    const { status } = req.body;
+    try {
+      req.task.status = status;
+      await req.task.save();
+      res.status(200).json({ msg: "Task status updated correctly" });
+    } catch (error) {
+      return res.status(500).send({ error: "Error updating task status" });
+    }
+  };
 }

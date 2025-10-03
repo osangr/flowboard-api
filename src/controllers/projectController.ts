@@ -38,13 +38,15 @@ export class ProjectController {
   static updateProject = async (req: Request, res: Response) => {
     const { id } = req.params;
     try {
-      const project = await Project.findByIdAndUpdate(id, req.body);
-
-      const updateProject = await project?.save();
+      const project = await Project.findByIdAndUpdate(id);
 
       if (!project) {
         return res.status(404).send("Project not found");
       }
+      project.projectName = req.body.projectName;
+      project.clientName = req.body.clientName;
+      project.description = req.body.description;
+      const updateProject = await project?.save();
       res.send(`Project updated: ${updateProject}`);
     } catch (error) {
       return res.status(500).send("Error retrieving project");
